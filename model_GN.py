@@ -7,7 +7,7 @@ Created on Fri Jun 23 09:48:27 2023
 """
 
 
-
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -20,15 +20,15 @@ class Net(nn.Module):
         self.convblock1 = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(16),
+            nn.GroupNorm(8, 16),
             nn.Dropout(dropout_value)
-        ) # IP: 32, OP: 32
+        ) #IP: 32, OP: 32
         
         # CONVOLUTION BLOCK 2
         self.convblock2 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=24, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(24),
+            nn.GroupNorm(8, 24),
             nn.Dropout(dropout_value)
         ) # IP: 32, OP: 32
         
@@ -37,7 +37,7 @@ class Net(nn.Module):
         self.convblock3 = nn.Sequential(
             nn.Conv2d(in_channels=24, out_channels=8, kernel_size=(1, 1), padding=0, bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(8),
+            nn.GroupNorm(8, 8),
             nn.Dropout(dropout_value)
         ) # IP: 32, OP: 32
         
@@ -50,7 +50,7 @@ class Net(nn.Module):
         self.convblock4 = nn.Sequential(
             nn.Conv2d(in_channels=8, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(16),
+            nn.GroupNorm(8, 16),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
@@ -59,7 +59,7 @@ class Net(nn.Module):
         self.convblock5 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(32),
+            nn.GroupNorm(8, 32),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
@@ -68,7 +68,7 @@ class Net(nn.Module):
         self.convblock6 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=48, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(48),
+            nn.GroupNorm(16, 48),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
     
@@ -77,7 +77,7 @@ class Net(nn.Module):
         self.convblock7 = nn.Sequential(
             nn.Conv2d(in_channels=48, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(10),
+            nn.GroupNorm(10, 10),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
@@ -89,7 +89,7 @@ class Net(nn.Module):
         self.convblock8 = nn.Sequential(
             nn.Conv2d(in_channels=10, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(16),
+            nn.GroupNorm(16, 16),
             nn.Dropout(dropout_value)
         ) # IP: 8, OP: 8
         
@@ -98,7 +98,7 @@ class Net(nn.Module):
         self.convblock9 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), padding=0, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(32),
+            nn.GroupNorm(16, 32),
             nn.Dropout(dropout_value)
         ) # IP: 8, OP: 6
         
@@ -107,7 +107,7 @@ class Net(nn.Module):
         self.convblock10 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3, 3), padding=0, bias=False),
             nn.ReLU(),            
-            nn.BatchNorm2d(64),
+            nn.GroupNorm(32, 64),
             nn.Dropout(dropout_value)
         ) # IP: 6, OP: 4
     

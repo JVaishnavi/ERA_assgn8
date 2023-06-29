@@ -35,7 +35,7 @@ class Net(nn.Module):
         
         # CONVOLUTION BLOCK 3
         self.convblock3 = nn.Sequential(
-            nn.Conv2d(in_channels=40, out_channels=8, kernel_size=(1, 1), padding=0, bias=False),
+            nn.Conv2d(in_channels=24, out_channels=8, kernel_size=(1, 1), padding=0, bias=False),
             nn.ReLU(),
             nn.LayerNorm([32, 32]),
             nn.Dropout(dropout_value)
@@ -66,7 +66,7 @@ class Net(nn.Module):
         
         # CONVOLUTION BLOCK 6
         self.convblock6 = nn.Sequential(
-            nn.Conv2d(in_channels=40, out_channels=32, kernel_size=(3, 3), padding=1, bias=False),
+            nn.Conv2d(in_channels=24, out_channels=32, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
             nn.LayerNorm([16, 16]),
             nn.Dropout(dropout_value)
