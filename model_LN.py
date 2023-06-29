@@ -7,7 +7,7 @@ Created on Fri Jun 23 09:48:27 2023
 """
 
 
-
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -20,24 +20,24 @@ class Net(nn.Module):
         self.convblock1 = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),
-            nn.LayerNorm([1, 32, 32]),
+            nn.LayerNorm([32, 32]),
             nn.Dropout(dropout_value)
-        ) # IP: 32, OP: 32
+        ) #IP: 32, OP: 32
         
         # CONVOLUTION BLOCK 2
         self.convblock2 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=24, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),
-            nn.LayerNorm([24, 32, 32]),
+            nn.LayerNorm([32, 32]),
             nn.Dropout(dropout_value)
         ) # IP: 32, OP: 32
         
         
         # CONVOLUTION BLOCK 3
         self.convblock3 = nn.Sequential(
-            nn.Conv2d(in_channels=24, out_channels=8, kernel_size=(1, 1), padding=0, bias=False),
+            nn.Conv2d(in_channels=40, out_channels=8, kernel_size=(1, 1), padding=0, bias=False),
             nn.ReLU(),
-            nn.LayerNorm([8,32,32]),
+            nn.LayerNorm([32, 32]),
             nn.Dropout(dropout_value)
         ) # IP: 32, OP: 32
         
@@ -50,34 +50,34 @@ class Net(nn.Module):
         self.convblock4 = nn.Sequential(
             nn.Conv2d(in_channels=8, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([16,16,16]),
+            nn.LayerNorm([16, 16]),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
 
         # CONVOLUTION BLOCK 5
         self.convblock5 = nn.Sequential(
-            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), padding=1, bias=False),
+            nn.Conv2d(in_channels=16, out_channels=24, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([32,16,16]),
+            nn.LayerNorm([16, 16]),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
         
         # CONVOLUTION BLOCK 6
         self.convblock6 = nn.Sequential(
-            nn.Conv2d(in_channels=32, out_channels=48, kernel_size=(3, 3), padding=1, bias=False),
+            nn.Conv2d(in_channels=40, out_channels=32, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([48,16,16]),
+            nn.LayerNorm([16, 16]),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
     
     
         # CONVOLUTION BLOCK 7
         self.convblock7 = nn.Sequential(
-            nn.Conv2d(in_channels=48, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
+            nn.Conv2d(in_channels=32, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([10,16,16]),
+            nn.LayerNorm([16, 16]),
             nn.Dropout(dropout_value)
         ) # IP: 16, OP: 16
         
@@ -89,7 +89,7 @@ class Net(nn.Module):
         self.convblock8 = nn.Sequential(
             nn.Conv2d(in_channels=10, out_channels=16, kernel_size=(3, 3), padding=1, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([16,8,8]),
+            nn.LayerNorm([8, 8]),
             nn.Dropout(dropout_value)
         ) # IP: 8, OP: 8
         
@@ -98,7 +98,7 @@ class Net(nn.Module):
         self.convblock9 = nn.Sequential(
             nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), padding=0, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([32,6,6]),
+            nn.LayerNorm([6, 6]),
             nn.Dropout(dropout_value)
         ) # IP: 8, OP: 6
         
@@ -107,7 +107,7 @@ class Net(nn.Module):
         self.convblock10 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3, 3), padding=0, bias=False),
             nn.ReLU(),            
-            nn.LayerNorm([64,4,4]),
+            nn.LayerNorm([4, 4]),
             nn.Dropout(dropout_value)
         ) # IP: 6, OP: 4
     
@@ -141,5 +141,5 @@ class Net(nn.Module):
         x = self.gap(x)        
         x = self.convblock11(x)
 
-        #x = x.view(-1, 10)
+        x = x.view(-1, 10)
         return F.log_softmax(x, dim=-1)
